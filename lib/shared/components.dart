@@ -146,7 +146,7 @@ Widget CategItem(Map item, context, index) => Container(
 Future showToast({required String text, required ToastStates state}) =>
     Fluttertoast.showToast(
         msg: text,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 5,
         backgroundColor: chooseToastColor(state),

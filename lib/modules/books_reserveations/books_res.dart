@@ -36,7 +36,7 @@ class ResBooks extends StatelessWidget {
                     )
                   : LibraryCubit.get(context).myBooks.isEmpty
                       ? const Center(
-                          child: Text('you did not added favorites books yet'),
+                          child: Text('you did not bought any book yet'),
                         )
                       : ListView.separated(
                           itemCount: LibraryCubit.get(context).myBooks.length,

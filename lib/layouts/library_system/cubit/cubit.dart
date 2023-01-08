@@ -428,7 +428,7 @@ class LibraryCubit extends Cubit<LibraryStates> {
     // });
   }
 
-  void buy() {
+  void buy() async {
     List<bool> availabiles = [];
     booksFav.forEach((element) {
       availabiles.add(element.availability!);
@@ -439,7 +439,7 @@ class LibraryCubit extends Cubit<LibraryStates> {
           state: ToastStates.ERROR);
     } else {
       for (int i = 0; i < booksFav.length; i++) {
-        FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('users')
             .doc(uid)
             .collection('books')
@@ -451,14 +451,15 @@ class LibraryCubit extends Cubit<LibraryStates> {
           'cost': booksFav[i].cost,
           'categ': booksFav[i].categ,
           'image': booksFav[i].image,
-        }).then((val) async {
-          print(booksFav[i].id);
-          print(i);
-          await FirebaseFirestore.instance
+        }).then((val) {
+          // print(i);
+          // print(booksFav[i].id);
+
+          FirebaseFirestore.instance
               .collection('books')
               .doc(booksFav[i].id)
               .update({
-            'fav': booksFav[i].fav! + 1,
+            'fav': (booksFav[i].fav! + 1),
             'availability':
                 (booksFav[i].fav! + 1) == booksFav[i].quantity ? false : true
           });
@@ -469,7 +470,9 @@ class LibraryCubit extends Cubit<LibraryStates> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
-          .update({'favorites': []});
+          .update({'favorites': []}).then((value) {
+        emit(BuyFavSuccessState());
+      });
     }
   }
 

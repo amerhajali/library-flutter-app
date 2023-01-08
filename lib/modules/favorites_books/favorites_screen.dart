@@ -13,7 +13,14 @@ class FavBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LibraryCubit, LibraryStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is BuyFavSuccessState) {
+          LibraryCubit.get(context).getMyBooks().whenComplete(() {});
+          showToast(
+              text: 'You bought all items which you selected',
+              state: ToastStates.SUCCESS);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(
