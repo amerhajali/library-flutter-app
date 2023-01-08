@@ -232,7 +232,11 @@ class BooksScreen extends StatelessWidget {
                                                                               LibraryCubit.get(context).removeBook(idCateg: categ!.id!, index: index);
                                                                             }
                                                                           : () {
-                                                                              LibraryCubit.get(context).favBook(idCateg: categ!.id!, index: index);
+                                                                              if (LibraryCubit.get(context).books[index]['availability']) {
+                                                                                LibraryCubit.get(context).favBook(idCateg: categ!.id!, index: index);
+                                                                              } else {
+                                                                                showToast(text: 'the book is not availabile', state: ToastStates.ERROR);
+                                                                              }
                                                                             },
                                                                   icon:
                                                                       // edit or favorite

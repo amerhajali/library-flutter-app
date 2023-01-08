@@ -467,7 +467,8 @@ class LibraryCubit extends Cubit<LibraryStates> {
       }
       booksFav = [];
       favorites = [];
-      FirebaseFirestore.instance
+      total = 0;
+      await FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
           .update({'favorites': []}).then((value) {
@@ -483,6 +484,7 @@ class LibraryCubit extends Cubit<LibraryStates> {
         .collection('users')
         .doc(uid)
         .collection('books')
+        .orderBy('time', descending: true)
         .get()
         .then((value) {
       value.docs.forEach((element) {
